@@ -43,15 +43,15 @@ public class EventApplicationIntegrationTest {
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG , StringSerializer.class,
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
-        ProducerRecord<String, String> record1 = new ProducerRecord<>("instrument-topic", 0, "key",  "CREATE_EVENT", List.of(header("EVENT_TYPE", "INSTRUMENT_CREATE")));
+        ProducerRecord<String, String> record1 = new ProducerRecord<>("instrument.topic", 0, "key",  "CREATE_EVENT", List.of(header("EVENT_TYPE", "INSTRUMENT_CREATE")));
         kafkaProducer.send(record1);
-        ProducerRecord<String, String> record2 = new ProducerRecord<>("instrument-topic", 0, "key",  "UPDATE_EVENT", List.of(header("EVENT_TYPE", "INSTRUMENT_UPDATE")));
+        ProducerRecord<String, String> record2 = new ProducerRecord<>("instrument.topic", 0, "key",  "UPDATE_EVENT", List.of(header("EVENT_TYPE", "INSTRUMENT_UPDATE")));
         kafkaProducer.send(record2);
 
         Thread.sleep(50000);
     }
 
-    private Header header(String key, String value) {
+    private static Header header(String key, String value) {
         return  new Header() {
             @Override
             public String key() {
